@@ -82,15 +82,17 @@ class TestFastAPIApp(unittest.TestCase):
 
     def test_api_users_create(self) -> None:
         """Verify creating a user via POST /api/users (Task Advanced 2)."""
+        import uuid
+        unique_username = f"user_{uuid.uuid4().hex[:8]}"
         new_user_data = {
-            "username": "api_tester_unique",
+            "username": unique_username,
             "full_name": "API Тестовый Пользователь",
             "role": "student",
         }
         response = self.client.post("/api/users", json=new_user_data)
         self.assertEqual(response.status_code, 201)
         created = response.json()
-        self.assertEqual(created["username"], "api_tester_unique")
+        self.assertEqual(created["username"], unique_username)
         self.assertEqual(created["full_name"], "API Тестовый Пользователь")
 
     def test_api_users_create_invalid(self) -> None:

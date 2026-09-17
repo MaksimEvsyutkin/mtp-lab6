@@ -66,8 +66,9 @@ class UserResponse(BaseModel):
 async def index_page(request: Request) -> HTMLResponse:
     """Render the home page detailing all completed Variant 2 tasks."""
     return templates.TemplateResponse(
-        "index.html",
-        {"request": request, "active_tab": "home"},
+        request=request,
+        name="index.html",
+        context={"active_tab": "home"},
     )
 
 
@@ -75,8 +76,9 @@ async def index_page(request: Request) -> HTMLResponse:
 async def greet_page_get(request: Request) -> HTMLResponse:
     """Render the greeting form page (Task Medium 2)."""
     return templates.TemplateResponse(
-        "greet.html",
-        {"request": request, "active_tab": "greet", "greeting": None, "username": ""},
+        request=request,
+        name="greet.html",
+        context={"active_tab": "greet", "greeting": None, "username": ""},
     )
 
 
@@ -86,9 +88,9 @@ async def greet_page_post(request: Request, username: str = Form(...)) -> HTMLRe
     clean_name = username.strip()
     greeting_message = f"Привет, {clean_name}!" if clean_name else "Привет, незнакомец!"
     return templates.TemplateResponse(
-        "greet.html",
-        {
-            "request": request,
+        request=request,
+        name="greet.html",
+        context={
             "active_tab": "greet",
             "greeting": greeting_message,
             "username": clean_name,
@@ -101,8 +103,9 @@ async def table_page(request: Request) -> HTMLResponse:
     """Render HTML table displaying database records (Task Medium 4 & Advanced 2)."""
     users = db.get_all_users()
     return templates.TemplateResponse(
-        "table.html",
-        {"request": request, "active_tab": "table", "users": users},
+        request=request,
+        name="table.html",
+        context={"active_tab": "table", "users": users},
     )
 
 
@@ -111,8 +114,9 @@ async def chat_page(request: Request) -> HTMLResponse:
     """Render real-time WebSocket chat room page (Task Advanced 6)."""
     messages = db.get_recent_messages(limit=50)
     return templates.TemplateResponse(
-        "chat.html",
-        {"request": request, "active_tab": "chat", "messages": messages},
+        request=request,
+        name="chat.html",
+        context={"active_tab": "chat", "messages": messages},
     )
 
 
