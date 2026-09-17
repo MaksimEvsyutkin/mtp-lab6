@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Главная — Лабораторная работа №6{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Лабораторная работа №6: Веб-программирование</h1>
+    <p><strong>Студент:</strong> Евсюткин Максим Сергеевич, группа 221141, вариант 2</p>
+    <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+    <h3>Выполненные задания варианта 2:</h3>
+    <ul>
+        <li><strong>Средняя №2:</strong> <a href="/greet">Страница с веб-формой (ввод имени → персональное приветствие)</a></li>
+        <li><strong>Средняя №4:</strong> <a href="/table">Страница с HTML-таблицей данных из базы SQLite</a></li>
+        <li><strong>Средняя №7:</strong> <a href="/api/info" target="_blank">FastAPI endpoint возвращает структурированный JSON</a></li>
+        <li><strong>Повышенная №2:</strong> Интеграция базы данных SQLite с CRUD-методами для пользователей и сообщений</li>
+        <li><strong>Повышенная №6:</strong> <a href="/chat">Полнофункциональный веб-чат реального времени на WebSockets</a></li>
+    </ul>
+</div>
+{% endblock %}

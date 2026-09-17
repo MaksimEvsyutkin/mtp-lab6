@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}WebSocket Чат — Задание Повыш. №6{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>WebSocket Чат в реальном времени (Повыш. №6)</h2>
+    <p>Чат с двусторонней связью через протокол WebSocket. Сообщения мгновенно доставляются всем участникам.</p>
+    
+    <div id="status" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #64748b;">Статус: Подключение...</div>
+    <div class="chat-box" id="messages"></div>
+
+    <form id="chat-form" style="display: flex; gap: 0.5rem;">
+        <input type="text" id="author-input" placeholder="Ваше имя" value="Максим" style="width: 140px;" required>
+        <input type="text" id="message-input" placeholder="Введите сообщение..." style="flex: 1;" required autocomplete="off">
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+<script>
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws/chat`;
+    const socket = new WebSocket(wsUrl);
+    const messagesDiv = document.getElementById('messages');
+    const statusDiv = document.getElementById('status');
+    const form = document.getElementById('chat-form');
+    const authorInput = document.getElementById('author-input');
+    const messageInput = document.getElementById('message-input');
+
+    socket.onopen = () => {
+        statusDiv.textContent = 'Статус: Подключено к WebSocket серверу';
+        statusDiv.style.color = '#16a34a';
+    };
+
+    socket.onclose = () => {
+        statusDiv.textContent = 'Статус: Соединение закрыто';
+        statusDiv.style.color = '#dc2626';
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const msgElem = document.createElement('div');
+        msgElem.className = 'chat-msg';
+        msgElem.innerHTML = `<span style="color: #64748b; font-size: 0.8rem;">[${data.timestamp}]</span> <strong>${data.author}:</strong> ${data.text}`;
+        messagesDiv.appendChild(msgElem);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    };
+
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const text = messageInput.value.trim();
+        const author = authorInput.value.trim() || 'Аноним';
+        if (text && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify({ author: author, text: text }));
+            messageInput.value = '';
+        }
+    };
+</script>
+{% endblock %}

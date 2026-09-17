@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Таблица данных — Задание Средн. №4{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Страница с таблицей данных из SQLite (Средн. №4 & Повыш. №2)</h2>
+    <p>Ниже отображены записи пользователей, хранящиеся в базе данных:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Логин (username)</th>
+                <th>ФИО пользователя</th>
+                <th>Роль</th>
+                <th>Дата регистрации</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td><strong>#{{ user.id }}</strong></td>
+                <td><code>{{ user.username }}</code></td>
+                <td>{{ user.full_name }}</td>
+                <td><span style="background: #e2e8f0; padding: 2px 8px; border-radius: 4px;">{{ user.role }}</span></td>
+                <td>{{ user.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

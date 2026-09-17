@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}FastAPI App (Лабораторная №6){% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <strong style="color: white; margin-right: 1rem;">FastAPI WebKit</strong>
+        <a href="/">Главная</a>
+        <a href="/greet">Форма (Приветствие)</a>
+        <a href="/table">Таблица данных</a>
+        <a href="/chat">WebSocket Чат</a>
+        <a href="/docs" target="_blank">Swagger API</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
